@@ -94,7 +94,6 @@ var Hrac={
     }
 }
 function MouseClick(event){
-    console.log("KOKOTINA");
     Hrac.strel(event);
 }
 function display(){
