@@ -14,10 +14,10 @@ class Sliepka {
         this.typ = Math.floor(Math.random()*3);
         this.dx = 3;
         this.size = 100;
-        if (this.smer==1){ //ak ide z lava doprava
+        if (this.smer==1){ //ak ide L->P
             this.x = 0;
         } else{
-            this.x = canvas.width; //ak ide z prava dolava
+            this.x = canvas.width; //ak ide P->L
         }
         this.y = Math.floor(Math.random()*(canvas.height/2+100));
         this.image = new Image();
