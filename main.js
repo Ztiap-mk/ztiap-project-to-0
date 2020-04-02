@@ -7,7 +7,6 @@ function mainloop_game(){
     display();
     requestAnimationFrame(mainloop_game);
     }
-
 }
 function move(){
     for (i in sliepky){
@@ -16,7 +15,14 @@ function move(){
     }
 }
 function MouseClick(event){
-    Hrac.strel(event);
+    Hrac.naboje--;
+    for (i in sliepky){
+        var sliepka = sliepky[i];
+        var x = event.pageX - canvas.offsetLeft;
+        var y = event.pageY - canvas.offsetTop;
+        console.log("Idem sliepku kukat");
+        sliepka.click(x,y);
+    }
 }
 function display(){
     ctx.drawImage(pozadie, 0, 0, pozadie.width,    pozadie.height,0, 0, canvas.width, canvas.height);
@@ -44,13 +50,8 @@ function nacitaj_menu(){
     ctx.font = "30px Arial";
     ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
     canvas.onclick = button_kontrola;
-    ctx.fillStyle = "red";
-    ctx.fillRect(play_button.x,play_button.y,100,100);
-    ctx.fillRect(instructions_button.x,instructions_button.y,100,100);
-    ctx.fillStyle = "black";
-    ctx.font = "12px Arial";
-    ctx.fillText('Play game',play_button.x+20,play_button.y+45); 
-    ctx.fillText('Instructions',instructions_button.x+20,instructions_button.y+45);
+    play_button.draw();
+    instructions_button.draw();
 }
 window.onload = function(){
     nacitaj_menu();
@@ -65,6 +66,7 @@ function ukonci_hru(){ //funkcia na ukoncenie hry
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.fillStyle = "red";
     ctx.font = "30px Arial";
+    sliepky = [];
     ctx.fillText('Game over',canvas.width/2-70,canvas.height/2-200);
     ctx.fillRect(play_button.x,play_button.y,150,100);
     ctx.fillStyle = "black";

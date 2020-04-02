@@ -46,9 +46,24 @@ class Sliepka {
       
       ctx.restore();
     }
-    onclick(){
-        Hrac.skore+=20;
-        delete sliepky[sliepky.indexOf(this)];
+    click(x,y){ //
+        var skore = 0;
+        switch (this.typ){
+            case 1:skore=10;
+            break;
+            case 2: skore=25;
+            break;
+            case 3: skore=15;
+        }
+        console.log("Klikam");
+        console.log(x,y);
+        console.log(this.x,this.y);
+        if(x>this.x && x<this.x+this.size && y>this.y && y<this.y+this.size){ //sliepka je v podstate stvorec, len sa zmensuje, zvacsuje
+            console.log("Preslo");
+            Hrac.skore+=skore;
+            delete sliepky[sliepky.indexOf(this)];
+            for (i=0;i<Math.floor(Math.random()*3)+1;i++) sliepky.push(new Sliepka());
+        }
     }
     kontrola(){
         if (this.x > canvas.width || this.x<0){
@@ -59,6 +74,4 @@ class Sliepka {
     
 }
 var sliepky = [];
-for(var x=0;x<6;x++){
-    sliepky.push(new Sliepka());
-}
+
