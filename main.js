@@ -1,97 +1,13 @@
-var pozadie = new Image();
-pozadie.src = "img/pozadie.png";
-var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext("2d");
-    canvas.width = 1000;
-    canvas.height = 600;
 
-
-
-class Sliepka {
-    constructor(){
-        this.smer =Math.random() < 0.5 ? 1 : -1;
-        console.log(this.smer);
-        this.typ = Math.floor(Math.random()*3);
-        this.dx = 3;
-        this.size = 100;
-        if (this.smer==1){ //ak ide L->P
-            this.x = 0;
-        } else{
-            this.x = canvas.width; //ak ide P->L
-        }
-        this.y = Math.floor(Math.random()*(canvas.height/2+100));
-        this.image = new Image();
-        this.image.src = 'img/sliepka1l.png';
-        
-        this.pom = 1;
-        switch (this.typ){
-            case 1:
-                this.velkost = 1;
-                break;
-            case 2:
-                this.velkost = 0.5;
-                break;
-            default:
-                this.velkost = 0.75;
-        }
-        console.log(this.image.width*this.velkost);
-    }
-    move(){
-        if (this.smer==1){
-            this.x+=this.dx;
-        }
-        else this.x-=this.dx;
-    }
-    draw(){
-      this.kontrola();
-      ctx.save();
-      ctx.translate(this.x,this.y);
-      
-      if (this.smer==1){
-        ctx.scale(-1*this.velkost,this.velkost);
-      } 
-      else {
-        ctx.scale(this.velkost,this.velkost);
-      }
-      //console.log(this.size,this.x,this.y); 
-      ctx.drawImage(this.image,-30,-30,this.size,this.size);
-      
-      ctx.restore();
-    }
-    onclick(){
-        console.log("BAM");
-        Hrac.skore+=20;
-    }
-    kontrola(){
-        if (this.x > canvas.width || this.x<0){
-            this.smer *=-1;
-            this.pom *=-1;
-        }
-    }
+//loop ktora bude bezat pocas hry
+function mainloop_game(){
+    //move();
     
-}
-
-var sliepky = [];
-for(var x=0;x<6;x++){
-    sliepky.push(new Sliepka());
-}
-
-var Hrac={
-    skore : 0,
-    time : 120,
-    naboje: 10,
-    strel: function (event){
-        var x = event.pageX - canvas.offsetLeft;
-        var y = event.pageY - canvas.offsetTop;
-        for (i in sliepky){
-            var sliepka = sliepky[i];
-            if (x>sliepka.x && x<(sliepka.x+sliepka.image.width*sliepka.velkost) && y>sliepka.y && y<(sliepka.y+sliepka.image.height*sliepka.velkost)){
-                sliepka.onclick();
-            }
-        }
-        this.naboje--;
-        
+    if (active){
+    display();
+    requestAnimationFrame(mainloop_game);
     }
+
 }
 function MouseClick(event){
     Hrac.strel(event);
@@ -111,15 +27,42 @@ function display(){
         sliepka.draw();
     }
 }
-
-function mainloop(){
-    display();
-    requestAnimationFrame(mainloop);
-
+//kontrola ci som stlacil nejaky z 2 buttonov
+function button_kontrola(event){
+    var x = event.pageX - canvas.offsetLeft;
+    var y = event.pageY - canvas.offsetTop;
+    if (instructions_button.visible) instructions_button.klik(x,y);
+    if (play_button.visible) play_button.klik(x,y);
+}
+function nacitaj_menu(){
+    ctx.font = "30px Arial";
+    ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
+    canvas.onclick = button_kontrola;
+    ctx.fillStyle = "red";
+    ctx.fillRect(play_button.x,play_button.y,100,100);
+    ctx.fillRect(instructions_button.x,instructions_button.y,100,100);
+    ctx.fillStyle = "black";
+    ctx.font = "12px Arial";
+    ctx.fillText('Play game',play_button.x+20,play_button.y+45); 
+    ctx.fillText('Instructions',instructions_button.x+20,instructions_button.y+45);
 }
 window.onload = function(){
-    
-    canvas.onclick = MouseClick;
-    this.requestAnimationFrame(mainloop);
-   
+    nacitaj_menu();
+}
+function ukonci_hru(){ //funkcia na ukoncenie hry
+    cancelAnimationFrame(mainloop_game);
+    console.log("funkcia ukonci hru");
+    active = false;
+    play_button.visible = true;
+    instructions_button.visible=false;
+    ctx.fillStyle = "white"; //biela
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = "red";
+    ctx.font = "30px Arial";
+    ctx.fillText('Game over',canvas.width/2-70,canvas.height/2-200);
+    ctx.fillRect(play_button.x,play_button.y,150,100);
+    ctx.fillStyle = "black";
+    ctx.font = "12px Arial";
+    ctx.fillText('Again',play_button.x+25,play_button.y+45); 
+    canvas.onclick = button_kontrola;
 }
