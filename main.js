@@ -1,13 +1,19 @@
 
 //loop ktora bude bezat pocas hry
 function mainloop_game(){
-    //move();
-    
+    if(timer<=0) ukonci_hru();
+    move(); 
     if (active){
     display();
     requestAnimationFrame(mainloop_game);
     }
 
+}
+function move(){
+    for (i in sliepky){
+        sliepka = sliepky[i];
+        sliepka.move();
+    }
 }
 function MouseClick(event){
     Hrac.strel(event);
@@ -23,7 +29,7 @@ function display(){
     }
     for (i in sliepky){
         sliepka = sliepky[i];
-        sliepka.move();
+        //sliepka.move();
         sliepka.draw();
     }
 }

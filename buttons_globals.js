@@ -48,6 +48,7 @@ play_button.klik = function(px,py){
             Hrac.pozx = 10; //lebo v move sa mi to potom hodilo na ukonci hru :), kedze nastavim active na true a hrac je mimo plochy stale
             Hrac.pozy = 10;
             canvas.onclick = MouseClick;
+            timer=120;
             console.log("Idem volat main loop");
             setInterval(() => {
                 timer--;
