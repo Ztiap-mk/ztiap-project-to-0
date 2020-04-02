@@ -4,7 +4,6 @@ class Sliepka {
         console.log(this.smer);
         this.typ = Math.floor(Math.random()*3);
         this.dx = 3;
-        this.size = 100;
         if (this.smer==1){ //ak ide L->P
             this.x = 0;
         } else{
@@ -23,7 +22,7 @@ class Sliepka {
             default:
                 this.velkost = 0.75;
         }
-        console.log(this.image.width*this.velkost);
+        this.size = 100*this.velkost;
     }
     move(){
         if (this.smer==1){
@@ -42,7 +41,8 @@ class Sliepka {
       else {
         ctx.scale(this.velkost,this.velkost);
       }
-      ctx.drawImage(this.image,-30,-30,this.size,this.size);
+      //ctx.fillRect(0,0,this.size,this.size);
+      ctx.drawImage(this.image,0,0,this.size,this.size);
       
       ctx.restore();
     }
@@ -55,14 +55,15 @@ class Sliepka {
             break;
             case 3: skore=15;
         }
-        console.log("Klikam");
-        console.log(x,y);
-        console.log(this.x,this.y);
+        console.log("Ja som klikol",x,y);
+        console.log("Suradnice sliepky",this.x,this.y);
+        console.log("Velkost sliepky",this.size);
         if(x>this.x && x<this.x+this.size && y>this.y && y<this.y+this.size){ //sliepka je v podstate stvorec, len sa zmensuje, zvacsuje
             console.log("Preslo");
             Hrac.skore+=skore;
+            console.log("SKORE "+Hrac.skore);
             delete sliepky[sliepky.indexOf(this)];
-            for (i=0;i<Math.floor(Math.random()*3)+1;i++) sliepky.push(new Sliepka());
+            for (i=0;i<Math.floor(Math.random()*2)+1;i++) {sliepky.push(new Sliepka())};
         }
     }
     kontrola(){

@@ -20,7 +20,6 @@ function MouseClick(event){
         var sliepka = sliepky[i];
         var x = event.pageX - canvas.offsetLeft;
         var y = event.pageY - canvas.offsetTop;
-        console.log("Idem sliepku kukat");
         sliepka.click(x,y);
     }
 }
@@ -64,13 +63,15 @@ function ukonci_hru(){ //funkcia na ukoncenie hry
     instructions_button.visible=false;
     ctx.fillStyle = "white"; //biela
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = "red";
+    play_button.text = "Play Again";
+    play_button.draw();
     ctx.font = "30px Arial";
     sliepky = [];
-    ctx.fillText('Game over',canvas.width/2-70,canvas.height/2-200);
-    ctx.fillRect(play_button.x,play_button.y,150,100);
+    console.log("TU")
+    console.log(canvas.width, canvas.height);
     ctx.fillStyle = "black";
-    ctx.font = "12px Arial";
-    ctx.fillText('Again',play_button.x+25,play_button.y+45); 
+    ctx.fillText("Game over",canvas.width/2-70,canvas.height/2-250);
+    ctx.fillText("Score: "+Hrac.skore,canvas.width/2-70,canvas.height/2-200); 
+    Hrac.skore = 0;
     canvas.onclick = button_kontrola;
 }

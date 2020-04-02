@@ -9,35 +9,35 @@ canvas.height = 600;
 var timer = 120;
 var Hrac={
     skore : 0,
-    time : 120,
     naboje: 10,
-    strel: function (event){
-        var x = event.pageX - canvas.offsetLeft;
-        var y = event.pageY - canvas.offsetTop;
-        for (i in sliepky){
-            var sliepka = sliepky[i];
-            if (x>sliepka.x && x<(sliepka.x+sliepka.image.width*sliepka.velkost) && y>sliepka.y && y<(sliepka.y+sliepka.image.height*sliepka.velkost)){
-                sliepka.onclick();
-            }
-        }
-        this.naboje--;
-    }
 }
 class Button{
-    constructor(x,y){
+    constructor(text,x,y,s,v){
+        this.text = text;
         this.x = x;
         this.y=y;
         this.visible=true;
+        this.s = s;
+        this.v = v;
     }
-    klik(x,y){}
+    draw(){
+        ctx.save();
+        ctx.font = "12px Arial";
+        console.log("Kreslim button",this.x,this.y,this.s, this.v);
+        ctx.fillStyle = "red";
+        ctx.fillRect(this.x,this.y,this.s,this.v);
+        ctx.fillStyle = "black";
+        ctx.fillText(this.text,this.x+20,this.y+45);
+        ctx.restore();
+    }
 }
-var instructions_button = new Button(canvas.width/2 -50,canvas.height/2+10);
+var instructions_button = new Button("Instructions",canvas.width/2 -50,canvas.height/2+10,100,100);
 instructions_button.klik = function(px,py){
     if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
         alert("Aim with mouse, reload with spacebar. You have 90 seconds to shoot as many chickens as you can.");
     }
 }
-var play_button = new Button(canvas.width/2 -50,canvas.height/2-100);
+var play_button = new Button("Play game",canvas.width/2 -50,canvas.height/2-100,100,100);
 play_button.klik = function(px,py){
     console.log(px,py,this.x,this.y);
         if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
@@ -45,10 +45,11 @@ play_button.klik = function(px,py){
             active = true;
             this.visible = false;
             instructions_button.visible = false;
-            Hrac.pozx = 10; //lebo v move sa mi to potom hodilo na ukonci hru :), kedze nastavim active na true a hrac je mimo plochy stale
-            Hrac.pozy = 10;
             canvas.onclick = MouseClick;
             timer=120;
+            for(var x=0;x<Math.floor(Math.random()*10+2);x++){
+                sliepky.push(new Sliepka());
+            }
             console.log("Idem volat main loop");
             setInterval(() => {
                 timer--;
@@ -57,5 +58,3 @@ play_button.klik = function(px,py){
             mainloop_game();
         }
 }
-
-
