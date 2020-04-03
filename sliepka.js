@@ -35,7 +35,7 @@ class Sliepka {
     }
     draw(){
       this.kontrola();
-      ctx.fillRect(this.x,this.y,this.sizew*this.smer,this.sizeh); //lebo ked ide v opacnom smere ked ju otocim cez scale tak 
+      //ctx.fillRect(this.x,this.y,this.sizew*this.smer,this.sizeh); //lebo ked ide v opacnom smere ked ju otocim cez scale tak 
       //stvorec je ako keby pred sliepkou
       ctx.save();
       ctx.translate(this.x,this.y);
