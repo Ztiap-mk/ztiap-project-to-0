@@ -47,7 +47,7 @@ play_button.klik = function(px,py){
             instructions_button.visible = false;
             canvas.onclick = MouseClick;
             timer=120;
-            for(var x=0;x<Math.floor(Math.random()*10+2);x++){
+            for(var x=0;x<1;x++){//Math.floor(Math.random()*10+2)
                 sliepky.push(new Sliepka());
             }
             console.log("Idem volat main loop");
