@@ -46,6 +46,11 @@ play_button.klik = function(px,py){
             this.visible = false;
             instructions_button.visible = false;
             canvas.onclick = MouseClick;
+            window.onkeypress = function(event){ //prebijanie
+                console.log("Daco som stlacil");
+                if (event.keyCode==32)
+                Hrac.naboje=10;
+            }
             timer=120;
             for(var x=0;x<1;x++){//Math.floor(Math.random()*10+2)
                 sliepky.push(new Sliepka());

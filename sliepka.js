@@ -65,22 +65,24 @@ class Sliepka {
         console.log("Ja som klikol",x,y);
         console.log("Suradnice sliepky",this.x,this.y);
         console.log("Rozmery sliepky",this.sizew*this.smer,this.sizeh);
-        if (this.smer==1){
-            if(x>this.x && x<this.x+(this.sizew*this.smer) && y>this.y && y<this.y+this.sizeh){ //sliepka je v podstate stvorec, len sa zmensuje, zvacsuje
-                console.log("Preslo");
-                Hrac.skore+=skore;
-                console.log("SKORE "+Hrac.skore);
-                delete sliepky[sliepky.indexOf(this)];
-                for (i=0;i<Math.floor(Math.random()*2)+1;i++) {sliepky.push(new Sliepka())};
+        if(Hrac.naboje>0){
+            if (this.smer==1){
+                if(x>this.x && x<this.x+(this.sizew*this.smer) && y>this.y && y<this.y+this.sizeh){ //sliepka je v podstate stvorec, len sa zmensuje, zvacsuje
+                    console.log("Preslo");
+                    Hrac.skore+=skore;
+                    console.log("SKORE "+Hrac.skore);
+                    delete sliepky[sliepky.indexOf(this)];
+                    for (i=0;i<Math.floor(Math.random()*2)+1;i++) {sliepky.push(new Sliepka())};
+                }
             }
-        }
-        else {//ked je opacne otocena sliepka, opacne ako obrazok tak this.x nie je lavy horny roh ale pravy lebo to tak vykreslujem
-            if(x<this.x && x>this.x+this.sizew*this.smer && y>this.y && y<this.y+this.sizeh){
-                console.log("Preslo");
-                Hrac.skore+=skore;
-                console.log("SKORE "+Hrac.skore);
-                delete sliepky[sliepky.indexOf(this)];
-                for (i=0;i<Math.floor(Math.random()*2)+1;i++) {sliepky.push(new Sliepka())};
+            else {//ked je opacne otocena sliepka, opacne ako obrazok tak this.x nie je lavy horny roh ale pravy lebo to tak vykreslujem
+                if(x<this.x && x>this.x+this.sizew*this.smer && y>this.y && y<this.y+this.sizeh){
+                    console.log("Preslo");
+                    Hrac.skore+=skore;
+                    console.log("SKORE "+Hrac.skore);
+                    delete sliepky[sliepky.indexOf(this)];
+                    for (i=0;i<Math.floor(Math.random()*2)+1;i++) {sliepky.push(new Sliepka())};
+                }
             }
         }
     }
