@@ -26,8 +26,8 @@ function MouseClick(event){
 function display(){
     ctx.drawImage(pozadie, 0, 0, pozadie.width,    pozadie.height,0, 0, canvas.width, canvas.height);
     ctx.fontStyle = "15px Arial";
-    this.ctx.fillText("Moorhuhn",10,25);
-    this.ctx.fillText("Score "+Hrac.skore,canvas.width/2,25);
+    ctx.fillText("Moorhuhn",10,25);
+    ctx.fillText("Score "+Hrac.skore,canvas.width/2,25);
     ctx.fillStyle = "#fc1703";
     for (i=0; i<Hrac.naboje;i++){
         var x = 650;
