@@ -6,41 +6,42 @@ class Base_screen{
     }
     update(){}
 }
+var zvuk = new Button("Sound",canvas.width-50,0,50,50); //toto budem pouzivat vo vsetkych screenoch cize to je globalne
+zvuk.draw = function(){ //musim prepisat draw funkciu na tento button lebo potrebujem menit farbu...
+    ctx.save();
+    ctx.font = "12px Arial";
+    if (zvuk_active){
+        ctx.fillStyle = "green";
+    } else ctx.fillStyle = "red";
+    ctx.fillRect(this.x,this.y,this.s,this.v);
+     ctx.fillStyle = "black";
+    ctx.fillText(this.text,this.x+10,this.y+25);
+    ctx.restore();
+}
+zvuk.click = function(px,py){
+    if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){
+        if (zvuk_active) {
+            zvuk_active=false;
+            priroda.pause();
+            priroda.currerntTime =0;
+        }
+        else {
+            zvuk_active = true;
+            priroda.play();
+            priroda.loop=true;
+        }
+    }
+}
 class Menu extends Base_screen{
     constructor(){
         super();
         var instructions_button = new Button("Instructions",canvas.width/2 -50,canvas.height/2+10,100,100);
             instructions_button.click = function(px,py){
             if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
-            alert("Aim with mouse, reload with spacebar. You have 90 seconds to shoot as many chickens as you can.");
+            alert("Aim with mouse, reload with spacebar. You have 120 seconds to shoot as many chickens as you can.");
             }
         }
         var play_button = new Button("Play game",canvas.width/2 -50,canvas.height/2-100,100,100);
-        var zvuk = new Button("Sound",canvas.width-50,0,50,50);
-        zvuk.draw = function(){ //musim prepisat draw funkciu na tento button lebo potrebujem menit farbu...
-            ctx.save();
-            ctx.font = "12px Arial";
-            if (zvuk_active){
-                ctx.fillStyle = "green";
-            } else ctx.fillStyle = "red";
-            ctx.fillRect(this.x,this.y,this.s,this.v);
-             ctx.fillStyle = "black";
-            ctx.fillText(this.text,this.x+10,this.y+25);
-            ctx.restore();
-        }
-        zvuk.click = function(px,py){
-            if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){
-                if (zvuk_active) {
-                    zvuk_active=false;
-                    priroda.pause();
-                    priroda.currerntTime =0;
-                }
-                else {
-                    zvuk_active = true;
-                    priroda.play();
-                }
-            }
-        }
          play_button.click = function(px,py){
             console.log("Kontrolujem play");
             if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
@@ -48,6 +49,9 @@ class Menu extends Base_screen{
                 window.onkeypress = function(event){ //prebijanie
                     if (event.keyCode==32)
                         Hrac.naboje=10;
+                        if(zvuk_active){
+                            prebijanie.play();
+                        }
                     }
                 timer=120;
                 Hrac.naboje=10;
@@ -69,9 +73,10 @@ class Menu extends Base_screen{
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
         this.ctx.font = "30px Arial";
         this.ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
-        this.play_button.draw();
-        this.instructions_button.draw();
-        this.zvuk.draw();
+        for (var i in this.objects){
+            this.objects[i].draw();
+        }
+        
     }
 }
 class Main_game extends Base_screen{
@@ -79,6 +84,8 @@ class Main_game extends Base_screen{
         super();
         for(let i=0;i<5;i++) sliepky.push(new Sliepka());
         this.objects = sliepky;
+        this.zvuk = zvuk;
+        this.objects.push(this.zvuk);
     }
     draw(){
         this.ctx.drawImage(pozadie, 0, 0, pozadie.width,    pozadie.height,0, 0, canvas.width, canvas.height);
@@ -93,10 +100,12 @@ class Main_game extends Base_screen{
         ctx.fillRect(x+i*30,y,20,20);
         }
         for (var i in this.objects){
-        var sliepka = this.objects[i];
-            sliepka.move();
-            sliepka.draw();
+        var object = this.objects[i];
+            if (typeof(object.move)=="function") //osetrenie aby som nevolal na zvuk funkciu move... potom by to padlo
+                object.move();
+            object.draw();
         }
+        this.zvuk.draw();
     }
     update(){
         this.objects=sliepky;
@@ -116,17 +125,19 @@ class Game_over extends Base_screen{
                 timer=120;
                 casovac_f = setInterval(() => {
                     timer--;
-                    console.log(timer);
                 }, 1000);
                 }
         }
         this.game_over_button = game_over_button;
         this.objects.push(this.game_over_button);
+        this.zvuk = zvuk;
+        this.objects.push(this.zvuk);
     }
     draw(){
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
         this.ctx.font = "30px Arial";
         this.ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
-        this.game_over_button.draw();
+        for (var i in this.objects)
+            this.objects.draw();
     }
 }

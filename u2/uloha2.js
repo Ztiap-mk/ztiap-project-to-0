@@ -9,8 +9,6 @@ var ctx = canvas.getContext("2d");
 var keys = {}; //ake klavesy sme stlacili
 var sliepky = []; //tu budu vsetky sliepky v hre
 var active = false;
-
-
 //buttony v menu 
 var play_button = {
     x:canvas.width/2 -50,

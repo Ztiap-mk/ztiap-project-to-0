@@ -75,9 +75,11 @@ class Sliepka {
         }
     }
     kontrola(){
-        if (this.x > canvas.width || this.x<0){
-            this.smer *=-1;
-            this.pom *=-1;
+       if (this.x > canvas.width || this.x<0){ 
+             /*this.smer *=-1; //toto je na odrazanie ale ale radsej vymazem a vygenerujem nove... makes more sense
+            this.pom *=-1;*/
+            delete sliepky[sliepky.indexOf(this)];
+            for (var i=0;i<Math.floor(Math.random()*2);i++) {sliepky.push(new Sliepka())};
         }
     } 
 }
