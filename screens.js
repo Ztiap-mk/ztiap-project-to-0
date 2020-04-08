@@ -144,6 +144,7 @@ class Game_over extends Base_screen{
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
         this.ctx.font = "30px Arial";
         this.ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
+        this.ctx.fillText("Score "+Hrac.skore,canvas.width/2-150,25);
         for (var i in this.objects)
             this.objects[i].draw();
     }
