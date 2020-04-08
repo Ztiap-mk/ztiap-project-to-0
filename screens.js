@@ -114,6 +114,7 @@ class Main_game extends Base_screen{
                 priroda.pause();
                 priroda.currentTime=0;
                 gong.play();
+                priroda.play();
             }
             clearInterval(casovac_f);
             state = new Game_over();

@@ -8,4 +8,6 @@ var smrt_sliepky = new Audio();
 smrt_sliepky.src="zvuky/trafenie.wav";
 var empty = new Audio();
 empty.src = "zvuky/empty.wav";
+var prebijanie = new Audio();
+prebijanie.src = "zvuky/prebijanie.wav";
 var zvuk_active=false;
