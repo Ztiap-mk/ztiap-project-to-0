@@ -57,7 +57,7 @@ class Sliepka {
             break;
             default: skore=15;
         }
-        if(Hrac.naboje>0){
+        if(Hrac.naboje>=0){ //lebo pri poslednom naboji odcitam najprv cize =0 a to uz by nebral do uvahy
             var trafil = false;
             if (this.smer==1){
                 if(x>this.x && x<this.x+(this.sizew*this.smer) && y>this.y && y<this.y+this.sizeh) //sliepka je v podstate stvorec, len sa zmensuje, zvacsuje
