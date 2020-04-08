@@ -1,5 +1,11 @@
-var gong = document.getElementById("gong");
-var strelba = document.getElementById("strelba");
-var priroda = document.getElementById("priroda");
-var trafenie = document.getElementById("trafenie");
+var gong = new Audio();
+gong.src = "zvuky/gong.mp3";
+var strelba = new Audio();
+strelba.src="zvuky/strelba.mp3";
+var priroda = new Audio();
+priroda.src="zvuky/priroda.wav";
+var smrt_sliepky = new Audio();
+smrt_sliepky.src="zvuky/trafenie.wav";
+var empty = new Audio();
+empty.src = "zvuky/empty.wav";
 var zvuk_active=false;

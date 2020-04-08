@@ -110,6 +110,11 @@ class Main_game extends Base_screen{
     update(){
         this.objects=sliepky;
         if (timer<0){
+            if (zvuk_active){
+                priroda.pause();
+                priroda.currentTime=0;
+                gong.play();
+            }
             clearInterval(casovac_f);
             state = new Game_over();
         }
@@ -138,6 +143,6 @@ class Game_over extends Base_screen{
         this.ctx.font = "30px Arial";
         this.ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
         for (var i in this.objects)
-            this.objects.draw();
+            this.objects[i].draw();
     }
 }

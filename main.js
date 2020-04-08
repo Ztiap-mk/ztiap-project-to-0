@@ -17,9 +17,16 @@ class App{
     onclick(event){ //kontrola ci som klikol na nejaky objekt v scene
         console.log("Klikol som");
         if (zvuk_active) {
-            strelba.pause();
-            strelba.currentTime=0;
-            strelba.play();
+            if (Hrac.naboje>0){
+                strelba.pause();
+                strelba.currentTime=0;
+                strelba.play();
+            }
+            else {
+                empty.pause();
+                empty.currentTime = 0;
+                empty.play();
+            }
         }
         var x = event.pageX - canvas.offsetLeft;
         var y = event.pageY - canvas.offsetTop;

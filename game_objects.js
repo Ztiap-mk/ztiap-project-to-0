@@ -58,19 +58,24 @@ class Sliepka {
             default: skore=15;
         }
         if(Hrac.naboje>0){
+            var trafil = false;
             if (this.smer==1){
-                if(x>this.x && x<this.x+(this.sizew*this.smer) && y>this.y && y<this.y+this.sizeh){ //sliepka je v podstate stvorec, len sa zmensuje, zvacsuje
-                    Hrac.skore+=skore;
-                    delete sliepky[sliepky.indexOf(this)];
-                    for (var i=0;i<Math.floor(Math.random()*2)+1;i++) {sliepky.push(new Sliepka())};
-                }
+                if(x>this.x && x<this.x+(this.sizew*this.smer) && y>this.y && y<this.y+this.sizeh) //sliepka je v podstate stvorec, len sa zmensuje, zvacsuje
+                    trafil = true;
             }
             else {//ked je opacne otocena sliepka, opacne ako obrazok tak this.x nie je lavy horny roh ale pravy lebo to tak vykreslujem
-                if(x<this.x && x>this.x+this.sizew*this.smer && y>this.y && y<this.y+this.sizeh){
-                    Hrac.skore+=skore;
-                    delete sliepky[sliepky.indexOf(this)];
-                    for (var i=0;i<Math.floor(Math.random()*2)+1;i++) {sliepky.push(new Sliepka())};
+                if(x<this.x && x>this.x+this.sizew*this.smer && y>this.y && y<this.y+this.sizeh)
+                   trafil=true;
+            }
+            if (trafil){
+                if (zvuk_active){
+                    smrt_sliepky.pause();
+                    smrt_sliepky.currentTime=0;
+                    smrt_sliepky.play();
                 }
+                Hrac.skore+=skore;
+                delete sliepky[sliepky.indexOf(this)];
+                for (var i=0;i<Math.floor(Math.random()*2)+1;i++) {sliepky.push(new Sliepka())};
             }
         }
     }
