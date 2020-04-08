@@ -129,6 +129,7 @@ class Game_over extends Base_screen{
             if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
                 state = new Main_game();
                 timer=120;
+                Hrac.skore=0;
                 casovac_f = setInterval(() => {
                     timer--;
                 }, 1000);
