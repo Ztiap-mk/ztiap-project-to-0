@@ -38,7 +38,7 @@ class Menu extends Base_screen{
         var instructions_button = new Button("Instructions",canvas.width/2 -50,canvas.height/2+10,100,100);
             instructions_button.click = function(px,py){
             if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
-            alert("Aim with mouse, reload with spacebar. You have 120 seconds to shoot as many chickens as you can.");
+                state = new Instructions();
             }
         }
         var play_button = new Button("Play game",canvas.width/2 -50,canvas.height/2-100,100,100);
@@ -147,5 +147,26 @@ class Game_over extends Base_screen{
         this.ctx.fillText("Score "+Hrac.skore,canvas.width/2-70,canvas.height/2-120);
         for (var i in this.objects)
             this.objects[i].draw();
+    }
+}
+class Instructions extends Base_screen{
+    constructor(){
+        super();
+        this.menu = new Button("Back",canvas.width/2 -50,canvas.height/2-100,100,100);
+        this.menu.click = function(px,py){
+            if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100) //ak som klikol na play_button
+                state = new Menu();
+        }
+        //this.menu = menu;
+        this.objects.push(this.menu);
+    }
+    draw(){
+        this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+        this.ctx.font = "30px Arial";
+        this.ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
+        this.menu.draw();
+        this.ctx.font = "15px Console";
+        this.ctx.fillText("Aim and shoot with mouse, reload with spacebar.",canvas.width/2-200,canvas.height/2+20);
+        this.ctx.fillText("You have 120 seconds to shoot as many chickens as you can.",canvas.width/2-200,canvas.height/2+100);
     }
 }
