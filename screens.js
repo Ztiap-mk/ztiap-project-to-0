@@ -35,14 +35,14 @@ zvuk.click = function(px,py){
 class Menu extends Base_screen{
     constructor(){
         super();
-        var instructions_button = new Button("Instructions",canvas.width/2 -50,canvas.height/2+10,100,100);
-            instructions_button.click = function(px,py){
+        this.instructions_button = new Button("Instructions",canvas.width/2 -50,canvas.height/2+10,100,100);
+            this.instructions_button.click = function(px,py){
             if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
                 state = new Instructions();
             }
         }
-        var play_button = new Button("Play game",canvas.width/2 -50,canvas.height/2-100,100,100);
-         play_button.click = function(px,py){
+        this.play_button = new Button("Play game",canvas.width/2 -50,canvas.height/2-100,100,100);
+         this.play_button.click = function(px,py){
             console.log("Kontrolujem play");
             if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
                 console.log("KLikol som na play");
@@ -62,9 +62,9 @@ class Menu extends Base_screen{
                 }, 1000);
                 }
             }
-        this.play_button = play_button;
+        //this.play_button = play_button;
         this.zvuk = zvuk;
-        this.instructions_button = instructions_button;
+        //this.instructions_button = instructions_button;
         this.objects.push(this.play_button);
         this.objects.push(this.zvuk);
         this.objects.push(this.instructions_button);
@@ -124,8 +124,8 @@ class Main_game extends Base_screen{
 class Game_over extends Base_screen{
     constructor(){
         super();
-        var game_over_button = new Button("Play again",canvas.width/2 -50,canvas.height/2-100,100,100);
-        game_over_button.click = function(px,py){
+        this.game_over_button = new Button("Play again",canvas.width/2 -50,canvas.height/2-100,100,100);
+        this.game_over_button.click = function(px,py){
             if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
                 state = new Main_game();
                 timer=120;
@@ -135,7 +135,7 @@ class Game_over extends Base_screen{
                 }, 1000);
                 }
         }
-        this.game_over_button = game_over_button;
+        //this.game_over_button = game_over_button;
         this.objects.push(this.game_over_button);
         this.zvuk = zvuk;
         this.objects.push(this.zvuk);

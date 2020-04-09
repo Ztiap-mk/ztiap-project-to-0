@@ -25,7 +25,6 @@ class ResourceManager {
             }
         });
     }
-    // ziskat js object Image, ktory sa posle do canvas
     getImageSource(imageName) {
         const image = this.loadedImages.get(imageName);
         if (image == null) {
