@@ -7,10 +7,9 @@ class App{
     async start(){
         console.log("Start");
         await resourceManager.init();
-        console.log("fail1");
         pozadie = resourceManager.getImageSource("pozadie");
         state =  new Menu();
-        this.objects = state.objects; //tu budu vzdy objekty danej sceny
+        //this.objects = state.objects; //tu budu vzdy objekty danej sceny
         this.canvas.onclick = this.onclick;
         this.main_loop();
     }
@@ -42,7 +41,7 @@ class App{
     }
     update(){
         state.update();
-        this.objects = state.objects;
+        //this.objects = state.objects;
     }
     main_loop(){
         this.update();

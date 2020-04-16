@@ -12,3 +12,4 @@ var Hrac={
 var state;
 var sliepky=[];
 var casovac_f;
+var animacia_sliepok_casovac;

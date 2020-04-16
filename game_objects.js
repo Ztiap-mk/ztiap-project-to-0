@@ -3,13 +3,14 @@ class Sliepka {
         this.smer =Math.random() < 0.5 ? 1 : -1;
         this.typ = Math.floor(Math.random()*3);
         this.dx = 3;
+        this.animation_cell = 0; //toto je na animovanie
         if (this.smer==1){ //ak P-L
             this.x = canvas.width;
         } else{
             this.x = 0; //ak ide L-P
         }
         this.y = Math.floor(Math.random()*(canvas.height/2+100));
-        this.image = resourceManager.getImageSource("sliepka");
+        this.image = resourceManager.getImageSource("sprite");
         switch (this.typ){
             case 1:
                 this.velkost = 1;
@@ -20,8 +21,8 @@ class Sliepka {
             default:
                 this.velkost = 0.75;
         }
-        this.sizew = (this.image.width-20)*this.velkost;
-        this.sizeh = (this.image.height-20)*this.velkost;
+        this.sizew = 100*this.velkost;
+        this.sizeh = (this.image.height)*this.velkost;
     }
     move(){
         if (this.smer==1){
@@ -45,8 +46,14 @@ class Sliepka {
         ctx.scale(-1*this.velkost,this.velkost);
         this.pom=-1;
       }
-      ctx.drawImage(this.image,0,0,this.sizew,this.sizeh);
+      ctx.drawImage(this.image,0+100*this.animation_cell,0,100,90,0,0,this.sizew,this.sizeh);
+      //kreslim image, v tom obrazku seknem obrazok od pozicie 0+100*animation cell, vyska od 0, sekam po 100px a 90px na vysku,
+      //rozmery obrazka ktory idem vykreslit su this.sizew a this.sizeh
       ctx.restore();
+    }
+    new_frame(){
+        if (this.animation_cell+1>6) this.animation_cell=0;
+        else this.animation_cell++;
     }
     click(x,y){ //
         var skore = 0;

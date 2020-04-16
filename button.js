@@ -6,6 +6,7 @@ class Button{
         this.visible=true;
         this.s = s;
         this.v = v;
+        this.ctx = ctx;
     }
     draw(){
         ctx.save();

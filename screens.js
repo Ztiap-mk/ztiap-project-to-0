@@ -58,8 +58,18 @@ class Menu extends Base_screen{
                 state = new Main_game();
                 casovac_f = setInterval(() => {
                     timer--;
-                    console.log(timer);
+                    console.log("Sliepky ", sliepky)
+                    //console.log(timer);
+                    
                 }, 1000);
+                animacia_sliepok_casovac = setInterval(function(){ //volam funkcie pre kazdu sliepku aby posunula svoj
+                    //animation cell
+                    for (var y in sliepky){
+                        var s = sliepky[y];
+                        console.log( "toto ma byt sliepka",s);
+                        s.new_frame();
+                    }
+                },200)
                 }
             }
         //this.play_button = play_button;
@@ -83,7 +93,7 @@ class Main_game extends Base_screen{
     constructor(){
         super();
         for(let i=0;i<5;i++) sliepky.push(new Sliepka());
-        this.objects = sliepky;
+        this.objects = sliepky.slice();
         this.zvuk = zvuk;
         this.objects.push(this.zvuk);
     }
@@ -108,7 +118,7 @@ class Main_game extends Base_screen{
         this.zvuk.draw();
     }
     update(){
-        this.objects=sliepky;
+        this.objects=sliepky.slice(); //lebo inac to nekopriovalo ten array ale iba v podstate ukazovalo na tu array
         if (timer<0){
             if (zvuk_active){
                 priroda.pause();
