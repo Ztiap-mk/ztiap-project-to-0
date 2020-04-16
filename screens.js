@@ -19,7 +19,7 @@ zvuk.draw = function(){ //musim prepisat draw funkciu na tento button lebo potre
     ctx.restore();
 }
 zvuk.click = function(px,py){
-    if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){
+    if(px>this.x && px<this.x+this.s && py>this.y && py<this.y+this.v){
         if (zvuk_active) {
             zvuk_active=false;
             priroda.pause();
@@ -37,14 +37,14 @@ class Menu extends Base_screen{
         super();
         this.instructions_button = new Button("Instructions",canvas.width/2 -50,canvas.height/2+10,100,100);
             this.instructions_button.click = function(px,py){
-            if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
+            if(px>this.x && px<this.x+this.s && py>this.y && py<this.y+this.v){ //ak som klikol na play_button
                 state = new Instructions();
             }
         }
         this.play_button = new Button("Play game",canvas.width/2 -50,canvas.height/2-100,100,100);
          this.play_button.click = function(px,py){
             console.log("Kontrolujem play");
-            if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
+            if(px>this.x && px<this.x+this.s && py>this.y && py<this.y+this.v){ //ak som klikol na play_button
                 console.log("KLikol som na play");
                 window.onkeypress = function(event){ //prebijanie
                     if (event.keyCode==32)
@@ -126,7 +126,7 @@ class Game_over extends Base_screen{
         super();
         this.game_over_button = new Button("Play again",canvas.width/2 -50,canvas.height/2-100,100,100);
         this.game_over_button.click = function(px,py){
-            if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100){ //ak som klikol na play_button
+            if(px>this.x && px<this.x+this.s && py>this.y && py<this.y+this.v){ //ak som klikol na play_button
                 state = new Main_game();
                 timer=120;
                 Hrac.skore=0;
@@ -154,7 +154,7 @@ class Instructions extends Base_screen{
         super();
         this.menu = new Button("Back",canvas.width/2 -50,canvas.height/2-100,100,100);
         this.menu.click = function(px,py){
-            if(px>this.x && px<this.x+100 && py>this.y && py<this.y+100) //ak som klikol na play_button
+            if(px>this.x && px<this.x+this.s && py>this.y && py<this.y+this.v) //ak som klikol na play_button
                 state = new Menu();
         }
         //this.menu = menu;
