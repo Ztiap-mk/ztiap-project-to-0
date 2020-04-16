@@ -58,7 +58,7 @@ class Menu extends Base_screen{
                 state = new Main_game();
                 casovac_f = setInterval(() => {
                     timer--;
-                    console.log("Sliepky ", sliepky)
+                    //console.log("Sliepky ", sliepky)
                     //console.log(timer);
                     
                 }, 1000);
@@ -66,15 +66,13 @@ class Menu extends Base_screen{
                     //animation cell
                     for (var y in sliepky){
                         var s = sliepky[y];
-                        console.log( "toto ma byt sliepka",s);
+                        //console.log( "toto ma byt sliepka",s);
                         s.new_frame();
                     }
                 },200)
                 }
             }
-        //this.play_button = play_button;
         this.zvuk = zvuk;
-        //this.instructions_button = instructions_button;
         this.objects.push(this.play_button);
         this.objects.push(this.zvuk);
         this.objects.push(this.instructions_button);
@@ -119,6 +117,7 @@ class Main_game extends Base_screen{
     }
     update(){
         this.objects=sliepky.slice(); //lebo inac to nekopriovalo ten array ale iba v podstate ukazovalo na tu array
+        this.objects.push(this.zvuk);
         if (timer<0){
             if (zvuk_active){
                 priroda.pause();
