@@ -81,17 +81,22 @@ class Sliepka {
                     smrt_sliepky.play();
                 }
                 Hrac.skore+=skore;
-                delete sliepky[sliepky.indexOf(this)];
-                for (var i=0;i<Math.floor(Math.random()*2)+1;i++) {sliepky.push(new Sliepka())};
+                //delete sliepky[sliepky.indexOf(this)];
+                sliepky.splice(sliepky.indexOf(this),1);
+                var max = sliepky.length>7?0:1;
+                for (var i=0;i<Math.floor(Math.random()*max+max);i++) {sliepky.push(new Sliepka())};
             }
         }
     }
     kontrola(){
-       if (this.x > canvas.width || this.x<0){ 
-             /*this.smer *=-1; //toto je na odrazanie ale ale radsej vymazem a vygenerujem nove... makes more sense
-            this.pom *=-1;*/
-            delete sliepky[sliepky.indexOf(this)];
-            for (var i=0;i<Math.floor(Math.random()*2);i++) {sliepky.push(new Sliepka())};
+       if (timer<60) this.dx = 5;
+       console.log("dlzka",sliepky.length);
+       console.log(sliepky);
+       if (this.x > canvas.width || this.x<0){  //ak sliepka prejde cez hraciu plochu vymazem ju a generujem nove
+            //delete sliepky[sliepky.indexOf(this)];
+            sliepky.splice(sliepky.indexOf(this),1);
+            var max = sliepky.length>7?0:1; //aby som tam nemal tych sliepok strasne vela...
+            for (var i=0;i<Math.floor(Math.random()*max+max);i++) {sliepky.push(new Sliepka())};
         }
     } 
 }

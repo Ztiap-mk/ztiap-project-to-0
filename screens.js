@@ -52,8 +52,11 @@ class Menu extends Base_screen{
                         if(zvuk_active){
                             prebijanie.play();
                         }
+                    if(event.key=="x"){
+                        state = new Game_over();
                     }
-                timer=120;
+                    }
+                timer=90;
                 Hrac.naboje=10;
                 state = new Main_game();
                 casovac_f = setInterval(() => {
@@ -175,7 +178,7 @@ class Instructions extends Base_screen{
         this.ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
         this.menu.draw();
         this.ctx.font = "15px Console";
-        this.ctx.fillText("Aim and shoot with mouse, reload with spacebar.",canvas.width/2-200,canvas.height/2+20);
-        this.ctx.fillText("You have 120 seconds to shoot as many chickens as you can.",canvas.width/2-200,canvas.height/2+100);
+        this.ctx.fillText("Aim and shoot with mouse, reload with spacebar. Exit with X.",canvas.width/2-200,canvas.height/2+20);
+        this.ctx.fillText("You have 90 seconds to shoot as many chickens as you can.",canvas.width/2-200,canvas.height/2+100);
     }
 }
