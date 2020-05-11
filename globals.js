@@ -4,7 +4,7 @@ var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext("2d");
 canvas.width = 1000;
 canvas.height = 600;
-var timer = 120;
+var timer = 90;
 var Hrac={
     skore : 0,
     naboje: 10,
