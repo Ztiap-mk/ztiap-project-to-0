@@ -1,8 +1,6 @@
 class Base_screen{
     constructor(){
         this.objects = [];
-        this.canvas = document.getElementById("canvas");
-        this.ctx = this.canvas.getContext("2d");
     }
     update(){}
 }
@@ -43,16 +41,14 @@ class Menu extends Base_screen{
         }
         this.play_button = new Button("Play game",canvas.width/2 -50,canvas.height/2-100,100,100);
          this.play_button.click = function(px,py){
-            console.log("Kontrolujem play");
             if(px>this.x && px<this.x+this.s && py>this.y && py<this.y+this.v){ //ak som klikol na play_button
-                console.log("KLikol som na play");
                 window.onkeypress = function(event){ //prebijanie
                     if (event.keyCode==32)
                         Hrac.naboje=10;
                         if(zvuk_active){
                             prebijanie.play();
                         }
-                    if(event.key=="x"){
+                    if(event.key=="x"){ //skoncenie hry skor
                         state = new Game_over();
                     }
                     }
@@ -60,30 +56,25 @@ class Menu extends Base_screen{
                 Hrac.naboje=10;
                 state = new Main_game();
                 casovac_f = setInterval(() => {
-                    timer--;
-                    //console.log("Sliepky ", sliepky)
-                    //console.log(timer);
-                    
+                    timer--;                    
                 }, 1000);
                 animacia_sliepok_casovac = setInterval(function(){ //volam funkcie pre kazdu sliepku aby posunula svoj
                     //animation cell
                     for (var y in sliepky){
                         var s = sliepky[y];
-                        //console.log( "toto ma byt sliepka",s);
                         s.new_frame();
                     }
                 },200)
                 }
             }
-        this.zvuk = zvuk;
         this.objects.push(this.play_button);
-        this.objects.push(this.zvuk);
+        this.objects.push(zvuk);
         this.objects.push(this.instructions_button);
     }
     draw(){ //
-        this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-        this.ctx.font = "30px Arial";
-        this.ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.font = "30px Arial";
+        ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
         for (var i in this.objects){
             this.objects[i].draw();
         }
@@ -94,22 +85,26 @@ class Main_game extends Base_screen{
     constructor(){
         super();
         for(let i=0;i<5;i++) sliepky.push(new Sliepka());
-        this.objects = sliepky.slice();
-        this.zvuk = zvuk;
+        this.objects = sliepky.slice(); //prekopirujem sliepky aj do objects
+        this.zvuk = zvuk; //nemazat potom to pada ale neviem preco
         this.objects.push(this.zvuk);
     }
-    draw(){
-        this.ctx.drawImage(pozadie, 0, 0, pozadie.width,    pozadie.height,0, 0, canvas.width, canvas.height);
-        this.ctx.fontStyle = "15px Arial";
-        this.ctx.fillText("Moorhuhn",10,25);
-        this.ctx.fillText("Score "+Hrac.skore,canvas.width/2-150,25);
-        this.ctx.fillText("Time: "+timer,canvas.width/2+100,25);
-        this.ctx.fillStyle = "#fc1703";
-        for (var i=0; i<Hrac.naboje;i++){
+    draw(){ //KRESLENIE VSETKYCH OBJEKTOV V SCENE 
+        ctx.drawImage(pozadie, 0, 0, pozadie.width,    pozadie.height,0, 0, canvas.width, canvas.height); //pozadie
+        //texty, skore a timer
+        ctx.fontStyle = "15px Arial";
+        ctx.fillText("Moorhuhn",10,25);
+        ctx.fillText("Score "+Hrac.skore,canvas.width/2-150,25);
+        ctx.fillText("Time: "+timer,canvas.width/2+100,25);
+        ctx.fillStyle = "#fc1703";
+        // -----
+        //vykreslovanie nabojov hraca
+        for (var i=0; i<Hrac.naboje;i++){ 
         var x = 650;
         var y = 550;
         ctx.fillRect(x+i*30,y,20,20);
         }
+        //pre kazdy objekt v scene (pole objects zavolam draw a move (ak je to sliepka))
         for (var i in this.objects){
         var object = this.objects[i];
             if (typeof(object.move)=="function") //osetrenie aby som nevolal na zvuk funkciu move... potom by to padlo
@@ -118,7 +113,7 @@ class Main_game extends Base_screen{
         }
         this.zvuk.draw();
     }
-    update(){
+    update(){ //UPDATE SCENY (ci som nahodou neskoncil hru a tiez update kolko mam momentalne sliepok na hracej ploche)
         this.objects=sliepky.slice(); //lebo inac to nekopriovalo ten array ale iba v podstate ukazovalo na tu array
         this.objects.push(this.zvuk);
         if (timer<0){
@@ -140,23 +135,21 @@ class Game_over extends Base_screen{
         this.game_over_button.click = function(px,py){
             if(px>this.x && px<this.x+this.s && py>this.y && py<this.y+this.v){ //ak som klikol na play_button
                 state = new Main_game();
-                timer=120;
+                timer=90;
                 Hrac.skore=0;
                 casovac_f = setInterval(() => {
                     timer--;
                 }, 1000);
                 }
         }
-        //this.game_over_button = game_over_button;
         this.objects.push(this.game_over_button);
-        this.zvuk = zvuk;
-        this.objects.push(this.zvuk);
+        this.objects.push(zvuk);
     }
     draw(){
-        this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-        this.ctx.font = "30px Arial";
-        this.ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
-        this.ctx.fillText("Score "+Hrac.skore,canvas.width/2-70,canvas.height/2-120);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.font = "30px Arial";
+        ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
+        ctx.fillText("Score "+Hrac.skore,canvas.width/2-70,canvas.height/2-120);
         for (var i in this.objects)
             this.objects[i].draw();
     }
@@ -169,16 +162,15 @@ class Instructions extends Base_screen{
             if(px>this.x && px<this.x+this.s && py>this.y && py<this.y+this.v) //ak som klikol na play_button
                 state = new Menu();
         }
-        //this.menu = menu;
         this.objects.push(this.menu);
     }
     draw(){
-        this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-        this.ctx.font = "30px Arial";
-        this.ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.font = "30px Arial";
+        ctx.fillText('Moorhuhn',canvas.width/2-70,canvas.height/2-200);
         this.menu.draw();
-        this.ctx.font = "15px Console";
-        this.ctx.fillText("Aim and shoot with mouse, reload with spacebar. Exit with X.",canvas.width/2-200,canvas.height/2+20);
-        this.ctx.fillText("You have 90 seconds to shoot as many chickens as you can.",canvas.width/2-200,canvas.height/2+100);
+        ctx.font = "15px Console";
+        ctx.fillText("Aim and shoot with mouse, reload with spacebar. Exit with X.",canvas.width/2-200,canvas.height/2+20);
+        ctx.fillText("You have 90 seconds to shoot as many chickens as you can.",canvas.width/2-200,canvas.height/2+100);
     }
 }
