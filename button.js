@@ -13,7 +13,7 @@ class Button{
         ctx.fillStyle = "red";
         ctx.fillRect(this.x,this.y,this.s,this.v);
         ctx.fillStyle = "black";
-        ctx.fillText(this.text,this.x+20,this.y+45);
+        ctx.fillText(this.text,this.x+20,this.y+this.v/2);
         ctx.restore();
     }
 }

@@ -49,6 +49,7 @@ class Menu extends Base_screen{
                             prebijanie.play();
                         }
                     if(event.key=="x"){ //skoncenie hry skor
+                        clearInterval(casovac_f);
                         state = new Game_over();
                     }
                     }
